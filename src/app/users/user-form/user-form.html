@@ -1,0 +1,73 @@
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-2xl p-8 border border-gray-100">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">
+    {{ isEdit ? 'Edit User' : 'Create User' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="space-y-5">
+    <!-- First Name -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+      <input formControlName="firstName" type="text"
+             class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 px-4 py-2 text-gray-700 placeholder-gray-400"
+             placeholder="Enter first name">
+      <div class="text-red-500 text-xs mt-1" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
+        First name is required.
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+      <input formControlName="lastName" type="text"
+             class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 px-4 py-2 text-gray-700 placeholder-gray-400"
+             placeholder="Enter last name">
+      <div class="text-red-500 text-xs mt-1" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
+        Last name is required.
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input formControlName="email" type="email"
+             class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 px-4 py-2 text-gray-700 placeholder-gray-400"
+             placeholder="Enter email">
+      <div class="text-red-500 text-xs mt-1" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        Valid email is required.
+      </div>
+    </div>
+
+    <!-- Role -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+      <select formControlName="role"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 px-4 py-2 text-gray-700">
+        <option value="" disabled>Select role</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+        <option value="guest">Guest</option>
+      </select>
+    </div>
+
+    <!-- Active -->
+    <div class="flex items-center space-x-2">
+      <input formControlName="active" type="checkbox"
+             class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-400">
+      <label class="text-sm text-gray-700">Active</label>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 pt-4">
+      <button type="button"
+              class="px-5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+              (click)="router.navigate(['/users'])">
+        Cancel
+      </button>
+      <button type="submit"
+              [disabled]="form.invalid"
+              class="px-5 py-2 rounded-lg bg-blue-600 text-white font-medium shadow hover:bg-blue-700 disabled:bg-blue-300 transition">
+        {{ isEdit ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</div>

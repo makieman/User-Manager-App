@@ -1,0 +1,6 @@
+<div *ngIf="toast$ | async as toast" [ngClass]="toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'" class="fixed top-5 right-5 text-white px-4 py-2 rounded shadow-md">
+  <div class="flex justify-between items-center">
+    <span>{{ toast.message }}</span>
+    <button (click)="hideToast()" class="ml-4 text-white">&times;</button>
+  </div>
+</div>

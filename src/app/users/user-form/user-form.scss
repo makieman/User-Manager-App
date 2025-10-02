@@ -1,0 +1,123 @@
+/* You can add component-specific styles here */// Container card
+.form-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// Form styles
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #111827;
+    background: #fff;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+    }
+  }
+
+  // Checkbox styling
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #2563eb;
+      cursor: pointer;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: #374151;
+      margin: 0;
+    }
+  }
+
+  // Validation errors
+  .error-message {
+    font-size: 0.8rem;
+    color: #dc2626;
+    margin-top: 0.25rem;
+  }
+
+  // Buttons
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+
+    button {
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+
+      &.cancel {
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+
+        &:hover {
+          background: #e5e7eb;
+        }
+      }
+
+      &.submit {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+
+        &:hover {
+          background: #1d4ed8;
+          box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+
+        &:disabled {
+          background: #93c5fd;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

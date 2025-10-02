@@ -1,0 +1,27 @@
+<div class="max-w-2xl mx-auto p-8" *ngIf="user$ | async as user; else loading">
+  <div class="bg-white shadow-lg rounded-2xl p-8 border border-gray-100">
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">{{ user.firstName }} {{ user.lastName }}</h1>
+        <p class="text-gray-500">{{ user.email }}</p>
+      </div>
+      <span [ngClass]="user.active ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'"
+            class="py-1 px-3 rounded-full text-sm font-medium">
+        {{ user.active ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+    <div class="mt-6 border-t border-gray-200 pt-6">
+      <p class="text-gray-600"><span class="font-medium text-gray-800">Role:</span> {{ user.role | titlecase }}</p>
+    </div>
+    <div class="mt-8 flex justify-between items-center">
+      <a routerLink="/users" class="px-5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium transition">Back to List</a>
+      <div>
+        <button (click)="deleteUser(user.id)" class="px-5 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 font-medium transition">Delete User</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p class="text-center p-8">Loading user details...</p>
+</ng-template>
