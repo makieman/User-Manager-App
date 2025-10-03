@@ -1,88 +1,52 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Alice Johnson",
-      "email": "alice.johnson@example.com",
-      "phone": "0723456789",
-      "organization": "TechCorp"
-    },
-    {
-      "id": 2,
-      "name": "Brian Smith",
-      "email": "brian.smith@example.com",
-      "phone": "0734567890",
-      "organization": "InnoSoft"
-    },
-    {
-      "id": 3,
-      "name": "Catherine Lee",
-      "email": "catherine.lee@example.com",
-      "phone": "0745678901",
-      "organization": "GreenWorld"
-    },
-    {
-      "id": 4,
-      "name": "Daniel Kim",
-      "email": "daniel.kim@example.com",
-      "phone": "0756789012",
-      "organization": "EduPlus"
-    },
-    {
-      "id": 5,
-      "name": "Eva Martinez",
-      "email": "eva.martinez@example.com",
-      "phone": "0767890123",
-      "organization": "HealthFirst"
-    },
-    {
-      "id": 6,
-      "name": "Franklin Otieno",
-      "email": "franklin.otieno@example.com",
-      "phone": "0778901234",
-      "organization": "AgriTech"
-    },
-    {
-      "id": 7,
-      "name": "Grace Wanjiru",
-      "email": "grace.wanjiru@example.com",
-      "phone": "0789012345",
-      "organization": "Maziwa Tele"
-    },
-    {
-      "id": 8,
-      "name": "Henry Ouma",
-      "email": "henry.ouma@example.com",
-      "phone": "0790123456",
-      "organization": "FinServe"
-    },
-    {
-      "id": 9,
-      "name": "Ivy Mwangi",
-      "email": "ivy.mwangi@example.com",
-      "phone": "0712345678",
-      "organization": "BuildRight"
-    },
-    {
-      "id": 10,
-      "name": "James Kariuki",
-      "email": "james.kariuki@example.com",
-      "phone": "0729876543",
-      "organization": "TravelEasy"
-    },
-    {
-      "id": 11,
-      "name": "Karen Chebet",
+      "id": "11",
+      "firstName": "Karen",
+      "lastName": "Chebet",
       "email": "karen.chebet@example.com",
-      "phone": "0738765432",
-      "organization": "SoftLink"
+      "role": "admin",
+      "active": true
     },
     {
-      "id": 12,
-      "name": "Louis Kiptoo",
+      "id": "12",
+      "firstName": "Louis",
+      "lastName": "Kiptoo",
       "email": "louis.kiptoo@example.com",
-      "phone": "0747654321",
-      "organization": "SmartLogistics"
+      "role": "user",
+      "active": true
+    },
+    {
+      "id": "13",
+      "firstName": "shaphan",
+      "lastName": "kirui ",
+      "email": "shaphan@gmail.com",
+      "role": "user",
+      "active": true
+    },
+    {
+      "id": "14",
+      "firstName": "Mark",
+      "lastName": "Maranga",
+      "email": "markmaranga9@gmail.com",
+      "role": "admin",
+      "active": true
+    },
+    {
+      "id": "15",
+      "firstName": "Mark",
+      "lastName": "Maranga",
+      "email": "markmaranga9@gmail.com",
+      "role": "user",
+      "active": true
+    },
+    {
+      "id": null,
+      "firstName": "Mark",
+      "lastName": "Maranga",
+      "email": "markmaranga9@gmail.com",
+      "role": "user",
+      "active": true
     }
   ]
 }

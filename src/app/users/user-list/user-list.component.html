@@ -1,6 +1,9 @@
 
 <div class="user-list-container">
-  <h1 class="user-list-title">Users</h1>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="user-list-title">Users</h1>
+    <a routerLink="/users/new" class="user-action shadow-md hover:shadow-lg hover:-translate-y-px">Add User</a>
+  </div>
   <div *ngIf="loading" class="user-list-loading">
     <span class="loader"></span> Loading users...
   </div>
@@ -26,7 +29,9 @@
           </span>
         </td>
         <td>
-          <a [routerLink]="['/users', user.id]" class="user-action">View</a>
+          <a [routerLink]="['/users', user.id]" class="user-action text-blue-600 hover:underline mr-2">View</a>
+          <a [routerLink]="['/users/edit', user.id]" class="user-action text-yellow-600 hover:underline mr-2">Edit</a>
+          <button (click)="deleteUser(user.id)" class="user-action text-red-600 hover:underline">Delete</button>
         </td>
       </tr>
     </tbody>

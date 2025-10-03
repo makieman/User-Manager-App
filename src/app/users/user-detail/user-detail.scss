@@ -1,0 +1,129 @@
+// Variables for color and spacing consistency
+$primary-text: #1f2937; // gray-800
+$secondary-text: #6b7280; // gray-500, gray-600
+$border-color: #e5e7eb; // gray-100, gray-200
+$bg-white: #ffffff;
+
+$success-bg: #d1fae5; // green-200
+$success-text: #065f46; // green-700
+$danger-bg: #fee2e2; // red-200
+$danger-text: #991b1b; // red-700
+$delete-btn-bg: #ef4444; // red-500
+$delete-btn-hover: #dc2626; // red-600
+
+$back-btn-bg: #f3f4f6; // gray-100
+$back-btn-hover: #e5e7eb; // gray-200
+
+.user-details-container {
+  // Equivalent to max-w-2xl mx-auto p-8
+  max-width: 42rem; // max-w-2xl
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem; // p-8
+}
+
+.user-card {
+  // Equivalent to bg-white shadow-lg rounded-2xl p-8 border border-gray-100
+  background-color: $bg-white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); // shadow-lg
+  border-radius: 1rem; // rounded-2xl
+  padding: 2rem; // p-8
+  border: 1px solid $border-color;
+}
+
+.card-header {
+  // Equivalent to flex justify-between items-start
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.user-name {
+  // Equivalent to text-3xl font-bold text-gray-800
+  font-size: 1.875rem; // text-3xl
+  font-weight: 700; // font-bold
+  color: $primary-text;
+}
+
+.user-email {
+  // Equivalent to text-gray-500
+  color: $secondary-text;
+}
+
+.user-status-tag {
+  // Equivalent to py-1 px-3 rounded-full text-sm font-medium
+  padding: 0.25rem 0.75rem; // py-1 px-3
+  border-radius: 9999px; // rounded-full
+  font-size: 0.875rem; // text-sm
+  font-weight: 500; // font-medium
+  
+  &.status-active {
+    // Equivalent to bg-green-200 text-green-700
+    background-color: $success-bg;
+    color: $success-text;
+  }
+  
+  &.status-inactive {
+    // Equivalent to bg-red-200 text-red-700
+    background-color: $danger-bg;
+    color: $danger-text;
+  }
+}
+
+.card-body {
+  // Equivalent to mt-6 border-t border-gray-200 pt-6
+  margin-top: 1.5rem; // mt-6
+  border-top: 1px solid #e5e7eb; // border-t border-gray-200
+  padding-top: 1.5rem; // pt-6
+}
+
+.user-role {
+  // Equivalent to text-gray-600
+  color: #4b5563; // Closest to gray-600
+}
+
+.role-label {
+  // Equivalent to font-medium text-gray-800
+  font-weight: 500; // font-medium
+  color: $primary-text;
+}
+
+.card-actions {
+  // Equivalent to mt-8 flex justify-between items-center
+  margin-top: 2rem; // mt-8
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button {
+  // Base styles for both buttons
+  padding: 0.5rem 1.25rem; // px-5 py-2
+  border-radius: 0.5rem; // rounded-lg
+  font-weight: 500; // font-medium
+  transition: background-color 0.15s ease-in-out; // transition
+  display: inline-block; // important for <a> tag to act like a button
+  text-align: center;
+}
+
+.button-back {
+  // Equivalent to bg-gray-100 text-gray-700 hover:bg-gray-200
+  background-color: $back-btn-bg;
+  color: #374151; // gray-700
+  
+  &:hover {
+    background-color: $back-btn-hover;
+  }
+}
+
+.button-delete {
+  // Equivalent to bg-red-500 text-white hover:bg-red-600
+  background-color: $delete-btn-bg;
+  color: $bg-white;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: $delete-btn-hover;
+  }
+}

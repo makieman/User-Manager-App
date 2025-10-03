@@ -1,3 +1,169 @@
-.active {
-  @apply bg-gray-200;
+// SCSS Variables
+$color-bg-light: #ffffff; // bg-white
+$color-bg-default: #f3f4f6; // gray-100 (for body background)
+$color-bg-content: #e5e7eb; // gray-200 (for main content background)
+$color-text-dark: #1f2937; // text-gray-800, implied
+$color-text-default: #4b5563; // text-gray-600
+$color-border: #e5e7eb; // gray-200
+
+// New Dark Sidebar Variables for a professional look
+$sidebar-bg-dark: #111827;      // A deep charcoal (gray-900)
+$sidebar-text-light: #d1d5db;   // A soft gray for text (gray-300)
+$sidebar-text-active: #ffffff;  // Pure white for active text
+$sidebar-hover-bg: #1f2937;     // A slightly lighter charcoal for hover (gray-800)
+$sidebar-active-accent: #4f46e5; // A vibrant indigo for the active link accent
+
+.app-layout {
+  // Equivalent to flex h-screen bg-gray-100
+  display: flex;
+  height: 100vh;
+  background-color: $color-bg-default;
+}
+
+// ---------------------------------
+// Sidebar Styles
+// ---------------------------------
+.sidebar {
+  // Equivalent to w-64 bg-white shadow-md
+  width: 16rem; // w-64
+  background-color: $sidebar-bg-dark;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); // shadow-md
+  flex-shrink: 0; // Prevents the sidebar from shrinking
+  border-right: 1px solid $sidebar-hover-bg; // Subtle separator
+}
+
+.sidebar-header {
+  // Equivalent to p-4 text-2xl font-bold
+  padding: 1rem; // p-4
+  font-size: 1.5rem; // text-2xl
+  font-weight: 700; // font-bold
+  color: $sidebar-text-active;
+}
+
+.sidebar-nav {
+  // Equivalent to mt-5
+  margin-top: 1.25rem;
+  
+  .nav-item {
+    // Equivalent to block px-4 py-2 text-gray-600 hover:bg-gray-200
+    display: block;
+    padding: 0.75rem 1rem; // Increased padding for better spacing
+    color: $sidebar-text-light;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-left: 3px solid transparent; // For the active indicator
+    
+    &:hover {
+      background-color: $sidebar-hover-bg;
+      color: $sidebar-text-active;
+    }
+    
+    // Angular routerLinkActive="active" style
+    &.active {
+      background-color: $sidebar-hover-bg;
+      color: $sidebar-text-active;
+      font-weight: 600;
+      border-left-color: $sidebar-active-accent; // Active indicator
+    }
+  }
+}
+
+// ---------------------------------
+// Main Content Styles
+// ---------------------------------
+.main-content-wrapper {
+  // Equivalent to flex-1 flex flex-col overflow-hidden
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; // Ensures content doesn't break the layout
+}
+
+.top-header {
+  // Equivalent to flex justify-between items-center p-4 bg-white border-b-2 border-gray-200
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem; // p-4
+  background-color: $sidebar-hover-bg; // Match the dark theme
+  border-bottom: 1px solid $sidebar-bg-dark;
+  flex-shrink: 0; // Prevents header from shrinking
+}
+
+.page-title h1 {
+  // Equivalent to text-2xl font-bold
+  font-size: 1.5rem; // text-2xl
+  font-weight: 700; // font-bold
+  color: $sidebar-text-active; // Light text for dark background
+}
+
+.user-controls {
+  // Equivalent to flex items-center
+  display: flex;
+  align-items: center;
+
+  .notification-area {
+    // Equivalent to relative
+    position: relative;
+  }
+  
+  .profile-area {
+    // Equivalent to relative ml-3
+    position: relative;
+    margin-left: 0.75rem; // ml-3
+  }
+}
+
+.notification-button {
+  // Equivalent to z-10 block rounded-full bg-white p-2 focus:outline-none
+  z-index: 10;
+  display: block;
+  border-radius: 9999px; // rounded-full
+  background-color: transparent;
+  padding: 0.5rem; // p-2
+  border: none;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $color-bg-default; // Simulated focus ring
+  }
+}
+
+.icon-svg {
+  // Equivalent to h-6 w-6 text-gray-600
+  height: 1.5rem; // h-6
+  width: 1.5rem; // w-6
+  color: $sidebar-text-light; // Light icon for dark background
+}
+
+.profile-button {
+  // Equivalent to flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out
+  display: flex;
+  border: 2px solid transparent;
+  border-radius: 9999px; // rounded-full
+  transition: all 150ms ease-in-out; // transition duration-150 ease-in-out
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-border; // focus:border-gray-300
+  }
+}
+
+.profile-avatar {
+  // Equivalent to h-8 w-8 rounded-full
+  height: 2rem; // h-8
+  width: 2rem; // w-8
+  border-radius: 9999px; // rounded-full
+  object-fit: cover;
+}
+
+.page-content {
+  // Equivalent to flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $color-bg-content; // gray-200
+  padding: 1rem; // p-4
 }
