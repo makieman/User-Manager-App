@@ -3,17 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.3",
     "@angular/common": "^20.3.3",
     "@angular/compiler": "^20.3.3",
     "@angular/core": "^20.3.3",
     "@angular/forms": "^20.3.3",
+    "@angular/localize": "^20.3.3",
     "@angular/material": "^20.2.5",
     "@angular/platform-browser": "^20.3.3",
     "@angular/router": "^20.3.3",
@@ -21,6 +23,7 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.3",
     "@angular/build": "^20.3.3",
     "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^20.3.0",

@@ -1,36 +1,37 @@
-<div class="max-w-4xl mx-auto p-8">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">Users</h1>
-    <a routerLink="/users/new" class="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-medium transition">
-      Add User
-    </a>
+
+<div class="user-list-container">
+  <h1 class="user-list-title">Users</h1>
+  <div *ngIf="loading" class="user-list-loading">
+    <span class="loader"></span> Loading users...
   </div>
-
-  <ng-container *ngIf="users$ | async as users; else loading">
-    <div class="bg-white shadow-lg rounded-2xl border border-gray-100">
-      <ul class="divide-y divide-gray-200">
-        <li *ngFor="let user of users" class="p-4 flex justify-between items-center hover:bg-gray-50 transition">
-          <div>
-            <p class="font-semibold text-gray-800">{{ user.firstName }} {{ user.lastName }}</p>
-            <p class="text-sm text-gray-500">{{ user.email }}</p>
-          </div>
-          <div class="flex items-center space-x-3">
-            <span [ngClass]="user.active ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'"
-                  class="py-1 px-3 rounded-full text-xs font-medium">
-              {{ user.active ? 'Active' : 'Inactive' }}
-            </span>
-            <a [routerLink]="['/users', user.id]" class="text-blue-600 hover:underline text-sm font-medium">Details</a>
-            <button (click)="deleteUser(user.id)" class="text-red-600 hover:underline text-sm font-medium">Delete</button>
-          </div>
-        </li>
-      </ul>
-      <div *ngIf="users.length === 0" class="text-center p-8 text-gray-500">
-        No users found.
-      </div>
-    </div>
-  </ng-container>
-
-  <ng-template #loading>
-    <p class="text-center p-8 text-gray-500">Loading users...</p>
-  </ng-template>
+  <div *ngIf="error" class="user-list-error">{{ error }}</div>
+  <table *ngIf="(users$ | async)?.length" class="user-list-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td><span class="user-role" [ngClass]="user.role">{{ user.role }}</span></td>
+        <td>
+          <span class="user-status" [ngClass]="{ 'active': user.active, 'inactive': !user.active }">
+            {{ user.active ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+        <td>
+          <a [routerLink]="['/users', user.id]" class="user-action">View</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!(users$ | async)?.length && !loading" class="user-list-empty">
+    No users found.
+  </div>
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Toast, ToastService } from './toast.service';
 import { Observable } from 'rxjs';
-
+ 
 @Component({
   selector: 'app-toast',
   standalone: true,
@@ -11,23 +11,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./toast.scss']
 })
 export class ToastComponent implements OnInit {
-  toast$: Observable<Toast | null>;
+  toast$: Observable<Toast[]>;  // Change Toast | null to Toast[]
 
-  constructor(private toastService: ToastService) {
-    this.toast$ = this.toastService.getToast();
+  constructor(public toastService: ToastService) {
+    this.toast$ = this.toastService.toasts$;  // Access the toasts$ observable
   }
-
-  ngOnInit(): void {
-    this.toast$.subscribe(toast => {
-      if (toast) {
-        setTimeout(() => {
-          this.toastService.hide();
-        }, 3000);
-      }
-    });
-  }
-
-  hideToast(): void {
-    this.toastService.hide();
-  }
+ 
+  ngOnInit(): void {}
 }

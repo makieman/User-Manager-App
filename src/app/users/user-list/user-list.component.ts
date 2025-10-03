@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { BehaviorSubject, Observable, switchMap, catchError, EMPTY } from 'rxjs';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
@@ -10,12 +10,15 @@ import { UserService } from '../user.service';
   standalone: true,
   imports: [AsyncPipe, NgForOf, RouterLink, NgClass, NgIf],
   templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.scss'],
 })
 export class UserListComponent {
-  private router = inject(Router);
   private userService = inject(UserService);
 
   private refreshUsers$ = new BehaviorSubject<void>(undefined);
+
+  loading = false;
+  error = '';
 
   users$: Observable<User[]> = this.refreshUsers$.pipe(
     switchMap(() => this.userService.getUsers().pipe(
@@ -23,6 +26,7 @@ export class UserListComponent {
         console.error('Could not fetch users:', err);
         // In a real app, you might show a toast notification here
         return EMPTY; // Return an empty observable to prevent the stream from breaking
+        this.error = 'Failed to load users.';
       })
     )),
   );
