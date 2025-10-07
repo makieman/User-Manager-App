@@ -1,0 +1,30 @@
+@use "variables" as *;
+
+.sidebar {
+  width: 280px;
+  background-color: $light;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.nav-link {
+  color: $dark;
+  &.active {
+    background-color: rgba($primary, 0.1);
+    color: $primary;
+    font-weight: 500;
+  }
+  &:hover {
+    background-color: rgba($primary, 0.05);
+  }
+}
+
+.main-content {
+  overflow-y: auto;
+}

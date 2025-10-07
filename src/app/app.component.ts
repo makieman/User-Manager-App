@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastComponent } from './toast/toast';
-import { NavigationComponent } from './navigation/navigation';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ToastComponent, NavigationComponent],
+  imports: [ToastComponent, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
     title = 'user-manager';

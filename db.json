@@ -1,31 +1,7 @@
 {
   "users": [
     {
-      "id": "11",
-      "firstName": "Karen",
-      "lastName": "Chebet",
-      "email": "karen.chebet@example.com",
-      "role": "admin",
-      "active": true
-    },
-    {
-      "id": "12",
-      "firstName": "Louis",
-      "lastName": "Kiptoo",
-      "email": "louis.kiptoo@example.com",
-      "role": "user",
-      "active": true
-    },
-    {
-      "id": "13",
-      "firstName": "shaphan",
-      "lastName": "kirui ",
-      "email": "shaphan@gmail.com",
-      "role": "user",
-      "active": true
-    },
-    {
-      "id": "15",
+      "id": null,
       "firstName": "Mark",
       "lastName": "Maranga",
       "email": "markmaranga9@gmail.com",
@@ -38,6 +14,38 @@
       "lastName": "Maranga",
       "email": "markmaranga9@gmail.com",
       "role": "user",
+      "active": true
+    },
+    {
+      "id": null,
+      "firstName": "Derrik ",
+      "lastName": "Ouma",
+      "email": "derik@gmail.com",
+      "role": "admin",
+      "active": true
+    },
+    {
+      "id": null,
+      "firstName": "Mark",
+      "lastName": "Maranga",
+      "email": "markmaranga9@gmail.com",
+      "role": "user",
+      "active": true
+    },
+    {
+      "id": null,
+      "firstName": "Mark",
+      "lastName": "Maranga",
+      "email": "markmaranga9@gmail.com",
+      "role": "user",
+      "active": true
+    },
+    {
+      "id": null,
+      "firstName": "Mark",
+      "lastName": "Maranga",
+      "email": "markmaranga9@gmail.com",
+      "role": "admin",
       "active": true
     },
     {

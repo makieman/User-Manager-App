@@ -5,4 +5,6 @@ export interface User {
   email: string;
   role: 'admin' | 'user' | 'viewer';
   active: boolean;
+  createdAt?: string | Date;
+  lastLogin?: string | Date;
 }

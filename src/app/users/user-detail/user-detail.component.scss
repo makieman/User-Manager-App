@@ -1,0 +1,41 @@
+@use "../../variables" as *;
+
+.user-header-card {
+  background: linear-gradient(135deg, rgba($primary, 0.05), rgba($primary, 0));
+  border-left: 4px solid $primary;
+}
+
+.user-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 3px solid $white;
+  box-shadow: $card-box-shadow;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e9ecef;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .info-label {
+    color: $secondary;
+    font-weight: 500;
+  }
+
+  .info-value {
+    font-weight: 500;
+  }
+}
+
+.permission-item {
+  &.disabled {
+    opacity: 0.6;
+    color: $secondary;
+  }
+}

@@ -1,28 +1,157 @@
-<div class="user-details-container" *ngIf="user$ | async as user; else loading">
-  <div class="user-card">
-    <div class="card-header">
-      <div class="user-info">
-        <h1 class="user-name">{{ user.firstName }} {{ user.lastName }}</h1>
-        <p class="user-email">{{ user.email }}</p>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-8">
+      <div class="mb-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/users">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User Details</li>
+          </ol>
+        </nav>
       </div>
-      <span [ngClass]="user.active ? 'status-active' : 'status-inactive'" class="user-status-tag">
-        {{ user.active ? 'Active' : 'Inactive' }}
-      </span>
-    </div>
-    
-    <div class="card-body">
-      <p class="user-role"><span class="role-label">Role:</span> {{ user.role | titlecase }}</p>
-    </div>
-    
-    <div class="card-actions">
-      <a routerLink="/users" class="button button-back">Back to List</a>
-      <div>
-        <button (click)="deleteUser(user.id)" class="button button-delete">Delete User</button>
+
+      <div *ngIf="user$ | async as user; else loading">
+        <div class="card user-header-card mb-4">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center">
+              <img [src]="'https://i.pravatar.cc/120?u=' + user.email" alt="{{ user.firstName }}" class="rounded-circle user-avatar me-4">
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h2 class="mb-1">{{ user.firstName }} {{ user.lastName }}</h2>
+                    <p class="text-muted mb-2">
+                      <i class="bi bi-envelope me-2"></i>{{ user.email }}
+                    </p>
+                    <div class="d-flex gap-2 mt-3">
+                      <span class="badge" [ngClass]="{
+                        'bg-danger': user.role === 'admin',
+                        'bg-primary': user.role === 'user',
+                        'bg-secondary': user.role === 'viewer'
+                      }">
+                        <i class="bi" [ngClass]="{
+                          'bi-shield-fill-check': user.role === 'admin',
+                          'bi-person-fill': user.role === 'user',
+                          'bi-eye-fill': user.role === 'viewer'
+                        }"></i>
+                        {{ user.role | titlecase }}
+                      </span>
+                      <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-warning'">
+                        <i class="bi" [ngClass]="user.active ? 'bi-check-circle-fill' : 'bi-pause-circle-fill'"></i>
+                        {{ user.active ? 'Active' : 'Inactive' }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <a [routerLink]="['/users/edit', user.id]" class="btn btn-outline-primary">
+                      <i class="bi bi-pencil me-2"></i>Edit
+                    </a>
+                    <button (click)="deleteUser(user.id)" class="btn btn-outline-danger">
+                      <i class="bi bi-trash me-2"></i>Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title mb-4">
+                  <i class="bi bi-info-circle text-primary me-2"></i>Basic Information
+                </h5>
+                <div class="info-row">
+                  <span class="info-label">First Name</span>
+                  <span class="info-value">{{ user.firstName }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Last Name</span>
+                  <span class="info-value">{{ user.lastName }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Email Address</span>
+                  <span class="info-value">{{ user.email }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">User Role</span>
+                  <span class="info-value">{{ user.role | titlecase }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title mb-4">
+                  <i class="bi bi-clock-history text-primary me-2"></i>Activity
+                </h5>
+                <div class="info-row">
+                  <span class="info-label">Account Status</span>
+                  <span class="info-value">
+                    <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-warning'">
+                      {{ user.active ? 'Active' : 'Inactive' }}
+                    </span>
+                  </span>
+                </div>
+                <div class="info-row" *ngIf="user.createdAt">
+                  <span class="info-label">Created Date</span>
+                  <span class="info-value">{{ user.createdAt | date: 'medium' }}</span>
+                </div>
+                <div class="info-row" *ngIf="user.lastLogin">
+                  <span class="info-label">Last Login</span>
+                  <span class="info-value">{{ user.lastLogin | date: 'medium' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title mb-4">
+              <i class="bi bi-shield-lock text-primary me-2"></i>Permissions
+            </h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <div class="permission-item">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  <span>View Users</span>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="permission-item" [class.disabled]="user.role !== 'admin'">
+                  <i class="bi" [class.bi-check-circle-fill]="user.role === 'admin'" [class.bi-x-circle-fill]="user.role !== 'admin'" [class.text-success]="user.role === 'admin'" [class.text-danger]="user.role !== 'admin'" class="me-2"></i>
+                  <span>Edit Users</span>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="permission-item" [class.disabled]="user.role !== 'admin'">
+                  <i class="bi" [class.bi-check-circle-fill]="user.role === 'admin'" [class.bi-x-circle-fill]="user.role !== 'admin'" [class.text-success]="user.role === 'admin'" [class.text-danger]="user.role !== 'admin'" class="me-2"></i>
+                  <span>Delete Users</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+          <a routerLink="/users" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to List
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <ng-template #loading>
-  <div class="text-center p-8">Loading user details...</div>
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading user details...</p>
+  </div>
 </ng-template>

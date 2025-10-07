@@ -1,8 +1,52 @@
 <!-- c:\Users\Mark\Desktop\user management app\user-manager\src\app\app.component.html -->
 
-<app-navigation></app-navigation>
+<div class="d-flex vh-100">
+  <!-- Sidebar -->
+  <aside class="sidebar d-flex flex-column p-3 shadow-sm">
+    <h4 class="sidebar-header">User Manager</h4>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a routerLink="/users" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-people-fill me-2"></i>
+          Users
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-speedometer2 me-2"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/settings" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-gear-fill me-2"></i>
+          Settings
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="User Avatar" width="32" height="32" class="rounded-circle me-2">
+        <strong>Mark</strong>
+      </a>
+      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+  </aside>
 
-<!-- This allows your pages (like user-list, user-form) to be displayed -->
+  <!-- Main Content -->
+  <div class="main-content flex-grow-1 d-flex flex-column">
+    <main class="flex-grow-1 p-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
 
 <!-- Add this line. It will display the toast notifications -->
 <app-toast></app-toast>

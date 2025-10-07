@@ -1,16 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
-/* filepath: user-manager/src/styles.scss */
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3490dc;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  animation: spin 1s linear infinite;
-  display: inline-block;
-  vertical-align: middle;
+
+// 1. Import Bootstrap's functions and mixins.
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/mixins";
+
+// 2. Import your custom variables to override Bootstrap defaults.
+@import "app/variables";
+
+// 3. Import Bootstrap's variables and the rest of its components.
+//    This uses your custom variables from the step above.
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/bootstrap";
+
+/* 4️⃣ Bootstrap Icons */
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* 5️⃣ Your custom styles */
+body {
+  background-color: $body-bg;
+  color: $body-color;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-@keyframes spin {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
+//  styled the side bar and main content are 
+.sidebar {
+  width: 280px;
+  background-color: $light; // Bootstrap’s variable
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.nav-link {
+  color: $dark;
+
+  &.active {
+    background-color: rgba($primary, 0.1);
+    color: $primary;
+    font-weight: 500;
+  }
+
+  &:hover {
+    background-color: rgba($primary, 0.05);
+  }
+}
+
+.main-content {
+  overflow-y: auto;
 }
