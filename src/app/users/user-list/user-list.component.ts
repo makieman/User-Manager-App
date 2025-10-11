@@ -1,46 +1,68 @@
+import { UsersService } from '../user.service'; // Correct import
 import { Component, inject } from '@angular/core';
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgForOf, NgIf, TitleCasePipe } from '@angular/common'; // ✅ Added TitleCasePipe
 import { RouterLink } from '@angular/router';
-import { BehaviorSubject, Observable, switchMap, catchError, EMPTY } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, catchError, EMPTY, tap, finalize } from 'rxjs';
 import { User } from '../user.model';
-import { UserService } from '../user.service';
+import { ToastService } from '../../toast/toast.service';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [AsyncPipe, NgForOf, RouterLink, NgClass, NgIf],
+  imports: [
+    AsyncPipe,
+    NgForOf,
+    RouterLink,
+    NgClass,
+    NgIf,
+    TitleCasePipe, // ✅ Added here
+  ],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.scss'],
 })
 export class UserListComponent {
-  private userService = inject(UserService);
+  private usersService = inject(UsersService);
+  private toastService = inject(ToastService);
 
   private refreshUsers$ = new BehaviorSubject<void>(undefined);
 
   loading = false;
   error = '';
+  isSubmitting = false;
 
-  users$: Observable<User[]> = this.refreshUsers$.pipe(
-    switchMap(() => this.userService.getUsers().pipe(
-      catchError(err => {
-        console.error('Could not fetch users:', err);
-        // In a real app, you might show a toast notification here
-        return EMPTY; // Return an empty observable to prevent the stream from breaking
-        this.error = 'Failed to load users.';
-      })
-    )),
+  users$: Observable<User[] | null> = this.refreshUsers$.pipe(
+    tap(() => {
+      this.loading = true;
+      this.error = '';
+    }),
+    switchMap(() =>
+      this.usersService.getUsers().pipe(
+        finalize(() => (this.loading = false)),
+        catchError((err) => {
+          console.error('Could not fetch users:', err);
+          this.error = 'Failed to load users.';
+          this.toastService.error(this.error);
+          return EMPTY;
+        })
+      )
+    )
   );
 
-  deleteUser(id: number): void {
+  deleteUser(id: string | undefined): void {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.userService.deleteUser(id).subscribe({
+      this.isSubmitting = true;
+      this.usersService.deleteUser(id!).subscribe({
         next: () => {
-          // In a real app, you might show a success toast
+          this.toastService.success('User deleted successfully!');
           this.refreshUsers$.next();
         },
         error: (err: any) => {
           console.error('Could not delete user:', err);
-          // In a real app, you might show an error toast
+          this.toastService.error('Failed to delete user.');
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
         },
       });
     }

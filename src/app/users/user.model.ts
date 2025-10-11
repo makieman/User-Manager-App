@@ -1,5 +1,6 @@
 export interface User {
-  id: number;
+  _id?: string; // ✅ MongoDB field
+  id?: number;  // optional in case we ever use numeric IDs
   firstName: string;
   lastName: string;
   email: string;

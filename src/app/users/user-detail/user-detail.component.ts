@@ -1,34 +1,46 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UserService } from '../user.service';
+import { UsersService } from '../user.service';
 import { ToastService } from '../../toast/toast.service';
-import { switchMap } from 'rxjs';
+import { EMPTY, catchError, switchMap } from 'rxjs';
 import { User } from '../user.model';
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, DatePipe],
+  imports: [CommonModule, RouterLink, DatePipe, NgClass],
   templateUrl: './user-detail.html',
   styleUrls: ['./user-detail.component.scss'],
 })
 export class UserDetailComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private userService = inject(UserService);
+  private usersService = inject(UsersService);
   private toastService = inject(ToastService);
 
   user$ = this.route.paramMap.pipe(
     switchMap(params => {
-      const id = params.get('id');
-      return this.userService.getUser(Number(id));
+      const id = Number(params.get('id'));
+      return this.usersService.getUser(id).pipe(catchError(() => {
+        this.toastService.error('User not found.');
+        this.router.navigate(['/users']);
+        return EMPTY;
+      }));
     })
   );
 
-  deleteUser(id: number) {
-    this.userService.deleteUser(id);
-    this.toastService.success('User deleted successfully');
-    this.router.navigate(['/users']);
+  deleteUser(id: string | undefined): void {
+    if (!id) return;
+
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.usersService.deleteUser(id).subscribe({
+        next: () => {
+          this.toastService.success('User deleted successfully!');
+          this.router.navigate(['/users']);
+        },
+        error: () => this.toastService.error('Failed to delete user')
+      });
+    }
   }
 }

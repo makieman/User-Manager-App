@@ -1,8 +1,8 @@
 // filepath: user-manager/src/app/users/user-form/user-form.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgIf } from '@angular/common';
-import { UserService } from '../user.service';
+import { NgIf, CommonModule } from '@angular/common';
+import { UsersService } from '../user.service';
 import { ToastService } from '../../toast/toast.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { User } from '../user.model';
@@ -10,7 +10,7 @@ import { User } from '../user.model';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgIf],
+  imports: [ReactiveFormsModule, RouterLink, NgIf, CommonModule],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.scss'],
 })
@@ -22,7 +22,7 @@ export class UserFormComponent implements OnInit {
   private userId: number | null = null;
 
   private fb = inject(FormBuilder);
-  private userService = inject(UserService);
+  private usersService = inject(UsersService);
   private toastService = inject(ToastService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -44,7 +44,7 @@ export class UserFormComponent implements OnInit {
     if (id) {
       this.isEdit = true;
       this.userId = +id; // Convert string 'id' to a number
-      this.userService.getUser(this.userId).subscribe((user) => {
+      this.usersService.getUser(this.userId).subscribe((user) => {
         if (user) {
           this.userForm.patchValue(user);
         }
@@ -57,7 +57,14 @@ export class UserFormComponent implements OnInit {
     this.isSubmitting = true;
  
     if (this.isEdit && this.userId) {
-      this.userService.updateUser(this.userForm.value).subscribe({
+      // The form value contains all fields, including the ID.
+      // The service expects the full user object for an update.
+      const updatedUser: User = {
+        ...this.userForm.value,
+        id: this.userId
+      };
+
+      this.usersService.updateUser(updatedUser).subscribe({
         next: () => {
           this.toastService.success('User updated successfully!');
           this.router.navigate(['/users']);
@@ -68,7 +75,7 @@ export class UserFormComponent implements OnInit {
         }
       });
     } else {
-      this.userService.addUser(this.userForm.value).subscribe({
+      this.usersService.addUser(this.userForm.value).subscribe({
         next: () => {
           this.toastService.success('User added successfully!');
           this.router.navigate(['/users']);

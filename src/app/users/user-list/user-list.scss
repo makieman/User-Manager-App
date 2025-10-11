@@ -1,118 +1,41 @@
-.user-list-container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.07);
-}
+@use "../../variables" as *;
 
-.user-list-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-.user-list-loading,
-.user-list-error,
-.user-list-empty {
-  text-align: center;
-  margin: 2rem 0;
-  font-size: 1.1rem;
-}
-
-.user-list-error {
-  color: #e53e3e;
-}
-
-.user-list-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #f9fafb;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
-}
-
-.user-list-table th,
-.user-list-table td {
-  padding: 1rem 1.2rem;
-  text-align: left;
-}
-
-.user-list-table th {
-  background: #f1f5f9;
-  font-weight: 600;
-  color: #374151;
-  border-bottom: 2px solid #e5e7eb;
-}
-
-.user-list-table tr {
-  transition: background 0.2s;
-}
-
-.user-list-table tbody tr:hover {
-  background: #e0e7ef;
-}
-
-.user-avatar {
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 8px 0 rgba(37,99,235,0.10);
-}
-
-.user-role {
-  padding: 0.3em 0.8em;
-  border-radius: 1em;
-  font-size: 0.95em;
-  font-weight: 500;
-  text-transform: capitalize;
-  &.admin {
-    background: #fef3c7;
-    color: #b45309;
+.table {
+  th {
+    font-weight: 600;
+    color: $secondary;
   }
-  &.user {
-    background: #d1fae5;
-    color: #065f46;
+
+  .user-name {
+    font-weight: 500;
   }
-  &.viewer {
-    background: #e0e7ef;
-    color: #1e293b;
+
+  .role-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
   }
 }
 
-.user-status {
-  font-weight: 600;
-  &.active {
-    color: #16a34a;
-  }
-  &.inactive {
-    color: #9ca3af;
-  }
-}
+.action-buttons {
+  .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
 
-.user-action {
-  padding: 0.3em 0.9em;
-  border-radius: 0.7em;
-  font-size: 0.95em;
-  font-weight: 500;
-  text-decoration: none;
-  background: #2563eb;
-  color: #fff;
-  transition: background 0.2s;
-  margin-right: 0.5em;
-  &:hover {
-    background: #1d4ed8;
+    i {
+      font-size: 0.9rem;
+    }
   }
 }
