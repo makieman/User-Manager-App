@@ -1,8 +1,8 @@
 import { UsersService } from '../user.service'; // Correct import
 import { Component, inject } from '@angular/core';
-import { AsyncPipe, NgClass, NgForOf, NgIf, TitleCasePipe } from '@angular/common'; // ✅ Added TitleCasePipe
-import { RouterLink } from '@angular/router';
-import { BehaviorSubject, Observable, switchMap, catchError, EMPTY, tap, finalize } from 'rxjs';
+import { AsyncPipe, NgForOf, NgIf, TitleCasePipe } from '@angular/common'; // ✅ Added TitleCasePipe
+import { Router } from '@angular/router';
+import { BehaviorSubject, EMPTY, Observable, catchError, finalize, switchMap, tap } from 'rxjs';
 import { User } from '../user.model';
 import { ToastService } from '../../toast/toast.service';
 
@@ -12,10 +12,8 @@ import { ToastService } from '../../toast/toast.service';
   imports: [
     AsyncPipe,
     NgForOf,
-    RouterLink,
-    NgClass,
     NgIf,
-    TitleCasePipe, // ✅ Added here
+    TitleCasePipe,
   ],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.scss'],
@@ -23,6 +21,7 @@ import { ToastService } from '../../toast/toast.service';
 export class UserListComponent {
   private usersService = inject(UsersService);
   private toastService = inject(ToastService);
+  private router = inject(Router);
 
   private refreshUsers$ = new BehaviorSubject<void>(undefined);
 
@@ -47,6 +46,14 @@ export class UserListComponent {
       )
     )
   );
+
+  addUser() {
+    this.router.navigate(['/users/new']); // 👈 make sure this route exists
+  }
+
+  editUser(id: string) {
+    this.router.navigate(['/edit-user', id]); // ✅
+  }
 
   deleteUser(id: string | undefined): void {
     if (confirm('Are you sure you want to delete this user?')) {

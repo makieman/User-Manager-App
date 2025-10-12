@@ -1,4 +1,3 @@
-// filepath: user-manager/src/app/users/user-form/user-form.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIf, CommonModule } from '@angular/common';
@@ -14,12 +13,11 @@ import { User } from '../user.model';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.scss'],
 })
-
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   isSubmitting = false;
   isEdit = false;
-  private userId: number | null = null;
+  private userId: string | null = null; // ✅ now string
 
   private fb = inject(FormBuilder);
   private usersService = inject(UsersService);
@@ -27,15 +25,13 @@ export class UserFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  constructor(
-  ) {
+  constructor() {
     this.userForm = this.fb.group({
-      id: [null],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       role: ['user', Validators.required],
-      active: [true]
+      active: [true], // Default to active for new users
     });
   }
 
@@ -43,28 +39,35 @@ export class UserFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
-      this.userId = +id; // Convert string 'id' to a number
+      this.userId = id; // ✅ keep as string
       this.usersService.getUser(this.userId).subscribe((user) => {
         if (user) {
-          this.userForm.patchValue(user);
+          this.userForm.patchValue({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+            active: user.active,
+          });
         }
       });
     }
   }
-
   onSubmit() {
     if (this.userForm.invalid) return;
     this.isSubmitting = true;
- 
-    if (this.isEdit && this.userId) {
-      // The form value contains all fields, including the ID.
-      // The service expects the full user object for an update.
-      const updatedUser: User = {
-        ...this.userForm.value,
-        id: this.userId
-      };
 
-      this.usersService.updateUser(updatedUser).subscribe({
+    const formValue = this.userForm.value;
+    const userPayload = {
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      email: formValue.email,
+      role: formValue.role,
+      active: formValue.active,
+    };
+
+    if (this.isEdit && this.userId) {
+      this.usersService.updateUser(this.userId, userPayload).subscribe({
         next: () => {
           this.toastService.success('User updated successfully!');
           this.router.navigate(['/users']);
@@ -72,10 +75,10 @@ export class UserFormComponent implements OnInit {
         error: () => {
           this.toastService.error('Failed to update user.');
           this.isSubmitting = false;
-        }
+        },
       });
     } else {
-      this.usersService.addUser(this.userForm.value).subscribe({
+      this.usersService.addUser(userPayload).subscribe({
         next: () => {
           this.toastService.success('User added successfully!');
           this.router.navigate(['/users']);
@@ -83,7 +86,7 @@ export class UserFormComponent implements OnInit {
         error: () => {
           this.toastService.error('Failed to add user.');
           this.isSubmitting = false;
-        }
+        },
       });
     }
   }

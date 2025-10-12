@@ -1,96 +1,38 @@
-<div class="user-list-container p-6 bg-gray-50 min-h-screen">
-  <!-- Header Section -->
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Users</h1>
-    <a
-      routerLink="/users/new"
-      class="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg hover:-translate-y-px transition-all"
-    >
-      + Add User
-    </a>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">User List</h2>
+    <button class="btn btn-primary shadow-sm px-4" (click)="addUser()">
+      <i class="bi bi-person-plus me-2"></i> Add User
+    </button>
   </div>
 
-  <!-- Loading Spinner -->
-  <div *ngIf="loading" class="text-center text-gray-600 my-4">
-    <span class="loader inline-block mr-2 border-2 border-gray-400 border-t-blue-600 rounded-full w-5 h-5 animate-spin"></span>
-    Loading users...
-  </div>
-
-  <!-- Error Message -->
-  <div *ngIf="error" class="text-center text-red-600 my-4 font-medium">
-    {{ error }}
-  </div>
-
-  <!-- User Table -->
-  <table *ngIf="(users$ | async)?.length" class="min-w-full bg-white rounded-lg shadow-md overflow-hidden">
-    <thead class="bg-gray-100 text-gray-700">
+  <table class="table table-bordered table-hover align-middle shadow-sm">
+    <thead class="table-dark">
       <tr>
-        <th class="text-left px-6 py-3">Name</th>
-        <th class="text-left px-6 py-3">Email</th>
-        <th class="text-left px-6 py-3">Role</th>
-        <th class="text-left px-6 py-3">Status</th>
-        <th class="text-left px-6 py-3">Actions</th>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Organization</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let user of users$ | async"
-        class="border-t hover:bg-gray-50 transition"
-      >
-        <td class="px-6 py-3 font-medium text-gray-800">
-          {{ user.firstName }} {{ user.lastName }}
-        </td>
-        <td class="px-6 py-3 text-gray-700">{{ user.email }}</td>
-        <td class="px-6 py-3">
-          <span
-            class="px-3 py-1 text-sm font-semibold rounded-full"
-            [ngClass]="{
-              'bg-blue-100 text-blue-700': user.role === 'admin',
-              'bg-green-100 text-green-700': user.role === 'user',
-              'bg-yellow-100 text-yellow-700': user.role === 'viewer'
-            }"
-          >
-            {{ user.role | titlecase }}
-          </span>
-        </td>
-        <td class="px-6 py-3">
-          <span
-            class="px-2 py-1 rounded-full text-sm font-medium"
-            [ngClass]="{
-              'bg-green-100 text-green-700': user.active,
-              'bg-red-100 text-red-700': !user.active
-            }"
-          >
-            {{ user.active ? 'Active' : 'Inactive' }}
-          </span>
-        </td>
-        <td class="px-6 py-3 flex items-center space-x-3">
-          <a
-            [routerLink]="['/users', user._id]"
-            class="text-blue-600 hover:underline"
-            >View</a
-          >
-          <a
-            [routerLink]="['/users/edit', user._id]"
-            class="text-yellow-600 hover:underline"
-            >Edit</a
-          >
-          <button
-            (click)="deleteUser(user._id)"
-            class="text-red-600 hover:underline"
-          >
-            Delete
-          </button>
+      <tr *ngFor="let user of users$ | async; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role | titlecase }}</td>
+        <td>{{ user.active ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editUser(user.id!.toString())">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteUser(user._id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <!-- Empty State -->
-  <div
-    *ngIf="!(users$ | async)?.length && !loading"
-    class="text-center text-gray-600 mt-8"
-  >
-    No users found.
+  <div *ngIf="(users$ | async)?.length === 0" class="alert alert-info text-center mt-3">
+    No users found. Click "Add User" to create one.
   </div>
 </div>
