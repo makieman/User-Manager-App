@@ -2,12 +2,21 @@
   <h2>{{ isEdit ? 'Edit User' : 'Add New User' }}</h2>
 
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <!-- Name -->
+    <!-- First Name -->
     <div>
-      <label for="name">Full Name</label>
-      <input id="name" formControlName="name" type="text" placeholder="John Doe">
-      <div class="error-message" *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
-        Name is required.
+      <label for="firstName">First Name</label>
+      <input id="firstName" formControlName="firstName" type="text" placeholder="John">
+      <div class="error-message" *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid">
+        First Name is required.
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div>
+      <label for="lastName">Last Name</label>
+      <input id="lastName" formControlName="lastName" type="text" placeholder="Doe">
+      <div class="error-message" *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid">
+        Last Name is required.
       </div>
     </div>
 
@@ -18,6 +27,15 @@
       <div class="error-message" *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
         <span *ngIf="userForm.get('email')?.errors?.['required']">Email is required.</span>
         <span *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email.</span>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div *ngIf="!isEdit">
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password" placeholder="Enter a secure password">
+      <div class="error-message" *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid">
+        Password is required.
       </div>
     </div>
 
@@ -33,11 +51,27 @@
       <input id="organization" formControlName="organization" type="text" placeholder="Lancola Tech Company">
     </div>
 
+    <!-- Role -->
+    <div>
+      <label for="role">Role</label>
+      <select id="role" formControlName="role">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+        <option value="viewer">Viewer</option>
+      </select>
+    </div>
+
+    <!-- Active -->
+    <div>
+      <label>
+        <input type="checkbox" formControlName="active">
+        Active
+      </label>
+    </div>
+
     <!-- Form actions -->
     <div class="form-actions">
-      <a routerLink="/users" class="cancel">
-        Cancel
-      </a>
+      <a routerLink="/users" class="cancel">Cancel</a>
       <button type="submit" [disabled]="userForm.invalid || isSubmitting" class="submit">
         {{ isSubmitting ? 'Saving...' : (isEdit ? 'Update User' : 'Save User') }}
       </button>
